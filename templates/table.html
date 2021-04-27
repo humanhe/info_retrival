@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Food Recipes!</title>
+    <link rel="stylesheet" href="/static/styles.css"/>
+</head>
+
+<body>
+    {% extends "layout.html" %}
+    {% block title %}Movie list{% endblock %}
+    {% block content %}
+        <table class="table">
+
+            <tr class="table__header">Results for the user query: {{user_query}}. Updated as: {{updated_query}}.</tr>
+
+            <tr class="table__header">
+                {% for header in table_header %}
+                        <th class="table__header_cell">{{ header }}</th>
+
+                {% endfor %}
+            </tr>
+
+            {% for row in data %}
+                <tr class="table__row">
+                    <td class="table__cell">{{ row[0] }}</td>
+                    <td class="table__cell"><a href={{row[3]}}>{{ row[1] }}</a></td>
+                    <td class="table__cell"><img src="{{row[2]}}" alt="" width="120" height="80" ></td>
+                    <td class="table__cell">{{ row[4] }}</td>
+
+                </tr>
+
+            {% endfor %}
+
+
+        </table>
+    {% endblock %}
+
+    <ul>
+        <li><a href="/">Home</a> </li>
+    </ul>
+</body>
+</html>

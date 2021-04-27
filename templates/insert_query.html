@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HomePage</title>
+    <link rel="stylesheet" href="/static/styles.css"/>
+</head>
+<body>
+    {% extends "layout.html" %}
+    {% block title %}Home{% endblock %}
+    {% block content %}
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container has-text-centered">
+            <h1 class="title", style="color: chocolate">Highway To Chef</h1>
+
+            <form method=post>
+                <input name="query", placeholder="Search recipe...", style="width: 300px; height: 40px; font-size: 16px">
+                <input type="submit", style="height: 30px;font-size: 16px ">
+            </form>
+
+            <table>
+                <th>Some of the great recipes...</th>
+
+                {% for row in home_data %}
+                    <tr class="table__row">
+
+                        <td class="table__cell"><a href={{row[3]}}>{{ row[1] }}</a></td>
+                        <td class="table__cell"><img src="{{row[2]}}" alt="" width="120" height="50" ></td>
+                        <td class="table__cell">{{ row[4] }}</td>
+
+                    </tr>
+
+                {% endfor %}
+            </table>
+
+
+        </div>
+      </div>
+    </section>
+
+
+    {% endblock %}
+</body>
+</html>

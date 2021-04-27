@@ -1,0 +1,44 @@
+.table {
+    border-spacing: 0;
+    margin: 2rem;
+    background-color: #f5f5f5;
+}
+
+.title {
+    color: coral;
+}
+
+.table__row:nth-child(odd) {
+    background-color: lightblue;
+}
+
+.table__header {
+    text-align: center;
+}
+
+.table__cell {
+    border-style: dashed;
+}
+
+.hero {
+    background-color: lightblue;
+}
+
+.navbar {
+    background-image: url("/static/Food_Web Banner.jpeg");
+
+    background-position: center;
+    background-size: cover;
+
+    position: absolute;
+
+}
+
+.navbar-brand {
+    position: absolute;
+
+    width: auto;
+}
+
+
+
