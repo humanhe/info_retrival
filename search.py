@@ -5,7 +5,12 @@ import urllib
 import os
 from PIL import Image
 
+"""
+Aims to retrieve search result from the user query. It will also check for duplicate web links
+to avoid seeing the same webpage more than once. The user query is being pre-processed before 
+sending over to ElasticSearch for search functionality.
 
+"""
 class get_search_result():
 
     def __init__(self):
@@ -13,26 +18,16 @@ class get_search_result():
         self.iterate_image = 1
         self.check_duplicates = {}
 
-
+    """
+    Returns search results of the user query
+    """
     def search(self, query, num_of_post = 50):
-
-        #Text Pre-processing
-        # query = query.lower()
-        # query = query.replace("'", ' ')
-        # query = query.replace('-', ' ')
-        # query = query.replace('\n', ' ')
-        # query = query.translate(str.maketrans(string.punctuation, ' ' * len(string.punctuation)))
-        # query = " ".join(query.split())
-
-        print('query ',query)
-
-
 
         #Spell Checking
         query_list = query.split(' ')
-        # print('updated_query_list', query_list)
+
         spell = SpellChecker()
-        # misspelled = spell.unknown(query_list)
+
         updated_query_list = []
 
         for word in query_list:
@@ -40,38 +35,14 @@ class get_search_result():
 
         updated_query = " ".join(updated_query_list)
 
-        print("updated_query spell checker", updated_query)
-
+        # Text Pre-processing
         updated_query = updated_query.lower()
         updated_query = updated_query.replace('-', ' ')
         updated_query = updated_query.replace('\n', ' ')
         updated_query = updated_query.translate(str.maketrans(string.punctuation, ' ' * len(string.punctuation)))
-        print("updated_query ",updated_query )
-        # print('updated_query ',updated_query)
 
 
 
-        # final_result = []
-        # results = self.es.search(index="final_kellyhe", body={
-        #
-        #     "query": {
-        #         "query_string": {
-        #             "fields": ["title^5", 'content^4'],
-        #             "query": updated_query
-        #         }
-        #     }
-        #
-        # },  size = 100)
-        #
-        # for i in range(len(results['hits']['hits'])):
-        #     a_doc = results['hits']['hits'][i]
-        #     final_result.append([a_doc['_id'], a_doc['_source']['title'], a_doc['_score']])
-        # print("query_string result is:\t")
-        # # print(results)
-        # print(final_result)
-        # print('result num ',len(final_result))
-
-        # work
         final_result_2 = []
         results_2 = self.es.search(index="final_kellyhe", body= {
 
@@ -103,33 +74,9 @@ class get_search_result():
                 update_image_path = self.image_link_preprocessing(a_doc['_source']['image'])
 
                 final_result_2.append([a_doc['_id'], web_title, update_image_path, a_doc['_source']['link'], description])
-            # final_result_2.append([a_doc['_id'], a_doc['_source']['title'], a_doc['_score'], a_doc['_source']['image'], a_doc['_source']['link']])
-        # print("simple_query_string result is:\t")
-        # print(results)
-        # print(final_result_2)
-        # print('result num ',len(final_result_2), len(final_result_2[0]))
 
         return final_result_2, updated_query
-        # final_result_1 = []
-        # results_1 = self.es.search(index="final_kellyhe", body={
-        #
-        #     "query": {
-        #         "multi_match": {
-        #             "fields": ["title^5", 'content^4'],
-        #             "query": updated_query
-        #         }
-        #     }
-        #
-        # },  size = 100)
-        #
-        #
-        # for i in range(len(results_1['hits']['hits'])):
-        #     a_doc = results_1['hits']['hits'][i]
-        #     final_result_1.append([a_doc['_id'], a_doc['_source']['title'], a_doc['_score']])
-        # print("multi_match result is:\t")
-        # # print(results)
-        # print(final_result_1)
-        # print('result num ',len(final_result_1))
+
 
 
     def image_link_preprocessing(self, img_link):
@@ -152,7 +99,7 @@ class get_search_result():
             pic_name = str(self.iterate_image) + '.jpeg'
             self.iterate_image += 1
             new_path = '/static/download_images/'
-            # updated_image_path = os.path.join(new_path, pic_name)
+
         else:
             new_path = '/static/images/'
 
@@ -178,26 +125,7 @@ class get_search_result():
         return ' '.join(description)
 
 
-# #
+# #For testing purposes
 # obj2 = get_search_result()
 # data1 = obj2.search("shepherd's")
 # print(data1)
-
-
-
-#works!
-# user_agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'
-# headers={'User-Agent':user_agent}
-# my_path = '/Users/humanuk/Desktop/for_test/'
-# for info in data1:
-#     request=urllib.request.Request(info[2] ,None,headers)
-#     response = urllib.request.urlopen(request)
-#
-#     image=Image.open(response)
-#     pic_name =  info[0] + '-' + os.path.basename(info[2])
-#     # image_path = os.path.join(my_path, os.path.basename(info[1]))
-#     image_path = os.path.join(my_path, pic_name)
-#     image.save(image_path)
-
-#In table.html
-# <td class="table__cell">{{ row[4] | urlize(40, true) }}</td>

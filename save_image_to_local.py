@@ -3,6 +3,9 @@ import urllib.request
 from PIL import Image
 import os
 
+"""
+This class is for saving images to local directories. 
+"""
 class download_image:
 
     def __init__(self):
@@ -61,7 +64,9 @@ class download_image:
                 if not line:
                     break
 
-
+    """
+    Filters out unwanted punctuations.
+    """
     def text_preprocessing(self, text):
 
         text = text.lower()
@@ -74,6 +79,12 @@ class download_image:
 
         return update_text
 
+    """
+    Gets the last part of the web links where usually include 
+    information of the websites. This will help filter out the 
+    unwanted images which usually includes web logos, pictures of 
+    people rather than food. 
+    """
     def stop_place(self, link, if_web):
         stop_place = 0
         dash_times = 0
@@ -112,6 +123,9 @@ class download_image:
 
         return count/len(web_list)
 
+    """
+    Saves images to the static folder
+    """
     def save_image_to_static(self, image_link_file):
 
         # user_agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'
@@ -159,7 +173,7 @@ class download_image:
 
 
 
-
-obj = download_image()
+#For testing purposes
+# obj = download_image()
 # obj.read_from_txt('datafile8054.txt')
 # obj.save_image_to_static('all_image_links.txt')

@@ -1,6 +1,9 @@
 from elasticsearch import Elasticsearch
 
-
+"""
+This class performs sending data over to ElasticSearch by reading
+data from local files.
+"""
 class send_data:
 
     def __init__(self):
@@ -26,6 +29,9 @@ class send_data:
                 if not line:
                     break
 
+    """
+    Sends data to ElasticSearch for indexing
+    """
     def send_to_index(self,a_webpage):
 
         webpage_id = int(a_webpage[1])
@@ -42,14 +48,10 @@ class send_data:
         else:
             print('Duplicate webpage id exist! ID is: ', webpage_id, webpage_title, web_link)
             exit()
-        # if not self.es.exists(index="test_kellyhe", id=webpage_id):
-        #     doc = {'title': webpage_title, 'content': web_content, 'image': img_link, 'link':web_link}
-        #     self.es.index(index='test_kellyhe', id=webpage_id, body=doc)
-        #     print('\tSuccess! ID is:  ', webpage_id)
-        # else:
-        #     print('Duplicate webpage id exist! ID is: ', webpage_id)
-        #     exit()
 
+    """
+    Deletes an index
+    """
     def delete_an_index(self, index_name):
 
         if self.es.indices.exists(index= index_name):
@@ -65,8 +67,8 @@ class send_data:
 
 
 
-
-obj = send_data()
+# For testing purposes
+# obj = send_data()
 # obj.delete_an_index('test_kellyhe')
 # obj.read_from_file('datafile8054.txt')
 
