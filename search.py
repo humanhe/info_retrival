@@ -168,8 +168,10 @@ class get_search_result():
         web_content_list = text.split()
 
         description = []
-        for i in range(90,121):
-            description.append(web_content_list[i])
+
+        if len(web_content_list) > 122:
+            for i in range(90,121):
+                description.append(web_content_list[i])
 
 
 
