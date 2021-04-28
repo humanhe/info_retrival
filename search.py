@@ -78,7 +78,10 @@ class get_search_result():
         return final_result_2, updated_query
 
 
-
+    """
+    If images not available, use backup images so that the user interface
+    presents a better look.
+    """
     def image_link_preprocessing(self, img_link):
 
         my_path = '/Users/humanuk/ir_final_project/static/images/'
@@ -110,7 +113,9 @@ class get_search_result():
 
         return updated_image_path
 
-
+    """
+    Provides short description for each webpage.
+    """
     def short_description(self, text):
         web_content_list = text.split()
 
